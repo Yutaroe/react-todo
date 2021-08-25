@@ -13,7 +13,7 @@ const App = () => {
   }
 
   const addTodo2 = () => {
-    setTodo(todos => [...todos,word])
+    setTodo([...todos,word])
   }
 
   return(
