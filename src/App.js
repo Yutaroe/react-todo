@@ -1,4 +1,4 @@
-import React, {Component, useState} from "react"
+import React, {useState} from "react"
 
 const App = () => {
   const [todos, setTodo] = useState(['aaa','bbb'])
@@ -12,10 +12,14 @@ const App = () => {
     setWord(event.target.value)
   }
 
+  const addTodo2 = () => {
+    console.log(todos)
+  }
+
   return(
     <React.Fragment>
       <h1>Todoリスト</h1>
-      <input type="text" value={ word } onChange={addTodo}></input>
+      <input type="text" value={ word } onChange={addTodo}></input><button　onClick={addTodo2}>追加</button>
       <ul>
         {todoList}
       </ul>
