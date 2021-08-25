@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component, useState} from "react"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+  const [todos, setTodo] = useState(['aaa','bbb'])
+  const [word, setWord] = useState('')
+
+  const todoList = todos.map((todo, index) => {
+    return <li key={index}>{todo}</li>
+  });
+
+  const addTodo = event => {
+    setWord(event.target.value)
+  }
+
+  return(
+    <React.Fragment>
+      <h1>Todoリスト</h1>
+      <input type="text" value={ word } onChange={addTodo}></input>
+      <ul>
+        {todoList}
+      </ul>
+    </React.Fragment>
+  )
 }
+
 
 export default App;
