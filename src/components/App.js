@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import {connect} from 'react-redux'
 import {addTodo} from '../actions'
+import {deleteTodo} from '../actions'
 
 const App = (props) => {
   // const [todos, setTodo] = useState(['aaa','bbb'])
@@ -9,16 +10,9 @@ const App = (props) => {
   const todoList = props.task.map((todo, index) => {
     return <li key={index}>
       {todo}
-      <button>削除</button>
+      <button onClick={() => deleteTodo(index)}>削除</button>
     </li>
   })
-
-  // const todoList = todos.map((todo, index) => {
-  //   return <li key={index}>
-  //     {todo}
-  //     <button onClick={() => deleteTodo(index)}>削除</button>
-  //     </li>
-  // });
 
   const addTodo = event => {
     setWord(event.target.value)
@@ -29,15 +23,9 @@ const App = (props) => {
     setWord('')
   }
 
-  // const addTodo2 = () => {
-  //   setTodo([...todos,word])
-  // }
-
-  // const deleteTodo = (index) => {
-  //   const deletetodo = todos.slice()
-  //   deletetodo.splice(index,1)
-  //   setTodo(deletetodo)
-  // }
+  const deleteTodo = (index) => {
+   props.deleteTodo(index)
+  }
 
   return(
     <React.Fragment>
@@ -53,7 +41,8 @@ const mapStateToProps = state => ({
   task: state.addTodo
 })
 const mapDispatchToProps = dispatch => ({
-  addTodo:(word)=>dispatch(addTodo(word))
+  addTodo:(word)=>dispatch(addTodo(word)),
+  deleteTodo:(index)=>dispatch(deleteTodo(index))
 })
 
 export default connect (mapStateToProps,mapDispatchToProps)(App)
