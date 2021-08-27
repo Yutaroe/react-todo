@@ -1,40 +1,25 @@
-import React, {useState} from "react"
-import { useDispatch, useSelector } from 'react-redux'
-import {addTodo} from '../actions'
-import {deleteTodo} from '../actions'
+import React from "react"
+import {TodoList} from  './todoList'
+import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom'
 
-const todoSelector = state => state.addTodo
-
-const App = (props) => {
-  const [word, setWord] = useState('')
-
-  const todo = useSelector(todoSelector)
-  const dispatch = useDispatch()
-
-  const todoList = todo.map((todo, index) => {
-    return <li key={index}>
-      {todo}
-      <button onClick={() => dispatch(deleteTodo(index))}>削除</button>
-    </li>
-  })
-
-  const setTodo = event => {
-    setWord(event.target.value)
-  }
-
-  const addTodo2 = () => {
-    dispatch(addTodo(word))
-    setWord('')
-  }
-
+const App = () => {
   return(
-    <React.Fragment>
-      <h1>Todoリスト</h1>
-      <input type="text" value={ word } onChange={setTodo}></input><button　onClick={addTodo2}>追加</button>
-      <ul>
-        {todoList}
-      </ul>
-    </React.Fragment>
+    <Router>
+      <div>
+        <h1>Todoリスト</h1>
+        <nav>
+          <ul>
+            <li>
+              <Link to='/'>Todo一覧</Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <Switch>
+        <Route path='/' component={TodoList} />
+      </Switch>
+    </Router>
   )
 }
 
