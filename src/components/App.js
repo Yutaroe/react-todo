@@ -1,48 +1,41 @@
 import React, {useState} from "react"
-import {connect} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {addTodo} from '../actions'
 import {deleteTodo} from '../actions'
 
+const todoSelector = state => state.addTodo
+
 const App = (props) => {
-  // const [todos, setTodo] = useState(['aaa','bbb'])
   const [word, setWord] = useState('')
 
-  const todoList = props.task.map((todo, index) => {
+  const todo = useSelector(todoSelector)
+  const dispatch = useDispatch()
+
+  const todoList = todo.map((todo, index) => {
     return <li key={index}>
       {todo}
-      <button onClick={() => deleteTodo(index)}>削除</button>
+      <button onClick={() => dispatch(deleteTodo(index))}>削除</button>
     </li>
   })
 
-  const addTodo = event => {
+  const setTodo = event => {
     setWord(event.target.value)
   }
 
   const addTodo2 = () => {
-    props.addTodo(word)
+    dispatch(addTodo(word))
     setWord('')
-  }
-
-  const deleteTodo = (index) => {
-   props.deleteTodo(index)
   }
 
   return(
     <React.Fragment>
       <h1>Todoリスト</h1>
-      <input type="text" value={ word } onChange={addTodo}></input><button　onClick={addTodo2}>追加</button>
+      <input type="text" value={ word } onChange={setTodo}></input><button　onClick={addTodo2}>追加</button>
       <ul>
         {todoList}
       </ul>
     </React.Fragment>
   )
 }
-const mapStateToProps = state => ({
-  task: state.addTodo
-})
-const mapDispatchToProps = dispatch => ({
-  addTodo:(word)=>dispatch(addTodo(word)),
-  deleteTodo:(index)=>dispatch(deleteTodo(index))
-})
 
-export default connect (mapStateToProps,mapDispatchToProps)(App)
+export default App
